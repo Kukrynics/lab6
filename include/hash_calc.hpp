@@ -1,4 +1,4 @@
-// Copyright 2020 vlad <Kukrynics@yandex.ru>
+// Copyright 2021 vlad <Kukrynics@yandex.ru>
 
 #include <vector>
 #include <atomic>
@@ -26,18 +26,17 @@
 
 #include "../third-party/PicoSHA2/picosha2.h"
 
-#ifndef INCLUDE_HASHCALC_HPP_
-#define INCLUDE_HASHCALC_HPP_
+#ifndef INCLUDE_HASH_CALC_HPP_
+#define INCLUDE_HASH_CALC_HPP_
 
 using nlohmann::json;
 
-class hashCalc {
+class hash_calc {
  public:
-  // hashCalc();
-  hashCalc(const size_t& M,
+  hash_calc(const size_t& M,
            const std::string& str = "");
-  explicit hashCalc(const std::string& str);
-  ~hashCalc();
+  explicit hash_calc(const std::string& str);
+  ~hash_calc();
   void countHash();
   void openFilePath();
   void initThreads();
@@ -53,4 +52,4 @@ class hashCalc {
   json j;
 };
 
-#endif  // INCLUDE_HASHCALC_HPP_
+#endif  // INCLUDE_HASH_CALC_HPP_

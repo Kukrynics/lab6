@@ -1,12 +1,12 @@
-// Copyright 2020 vlad <Kukrynics@yandex.ru>
+// Copyright 2021 vlad <Kukrynics@yandex.ru>
 
-#include "hashCalc.hpp"
+#include "hash_calc.hpp"
 
 namespace keywords = boost::log::keywords;
 namespace sinks = boost::log::sinks;
 boost::mutex mutex;
 
-hashCalc::hashCalc(const size_t& M, const std::string& str) {
+hash_calc::hash_calc(const size_t& M, const std::string& str) {
   nameOfReport = str;
   if (M < boost::thread::hardware_concurrency()) {  //попробовать заменить
     sizeOfThread = M;
@@ -14,18 +14,18 @@ hashCalc::hashCalc(const size_t& M, const std::string& str) {
   openFilePath();
 }
 
-hashCalc::hashCalc(const std::string& str) : nameOfReport(str) {
+hash_calc::hash_calc(const std::string& str) : nameOfReport(str) {
   openFilePath();
 }
 
-hashCalc::~hashCalc() {
+hash_calc::~hash_calc() {
   if (directionIsOpen()) {
     file_log << j.dump(1, '\t') << "\n";  // dump
     file_log.close();
   }
 }
 
-void hashCalc::openFilePath() {
+void hash_calc::openFilePath() {
   if (!nameOfReport.empty()) {
     file_log.open(nameOfReport);
   }
@@ -36,7 +36,7 @@ std::atomic<bool> stopFlag = true;
 
 void intHandler([[maybe_unused]] int dummy) { stopFlag = false; }
 
-void hashCalc::countHash() {
+void hash_calc::countHash() {
   // auto id = boost::this_thread::get_id();
   // boost::unique_lock<boost::mutex> lock(mutex);
   std::srand(time(nullptr));
@@ -62,9 +62,9 @@ void hashCalc::countHash() {
   }
 }
 
-void hashCalc::initThreads() {
+void hash_calc::initThreads() {
   for (size_t i = 0; i < sizeOfThread; ++i) {
-    listOfthread.push_back(boost::thread(&hashCalc::countHash, this));
+    listOfthread.push_back(boost::thread(&hash_calc::countHash, this));
   }
   for (auto& i : listOfthread) {
     i.join();
@@ -72,7 +72,7 @@ void hashCalc::initThreads() {
   listOfthread.clear();
 }
 
-void hashCalc::initLogs() {  //
+void hash_calc::initLogs() {  //
   boost::log::add_common_attributes();
   boost::log::add_console_log(
       std::cout, keywords::format = "[%TimeStamp%][%Severity%]: %Message%",
@@ -87,7 +87,7 @@ void hashCalc::initLogs() {  //
       keywords::format = "[%TimeStamp%][%Severity%]: %Message%");
 }
 
-void hashCalc::jsonOut(const int& data, const std::string& hash,
+void hash_calc::jsonOut(const int& data, const std::string& hash,
                        const time_t& time) {
   mutex.lock();
   json obj =
@@ -97,4 +97,4 @@ void hashCalc::jsonOut(const int& data, const std::string& hash,
   j.push_back(obj);
   mutex.unlock();
 }
-bool hashCalc::directionIsOpen() { return file_log.is_open(); }
+bool hash_calc::directionIsOpen() { return file_log.is_open(); }
