@@ -1,4 +1,4 @@
-#include <header.hpp>
+#include <hashCalc.hpp>
 
 int main() {
 
