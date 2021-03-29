@@ -52,4 +52,4 @@ class hash_calc {
   json j;
 };
 
-#endif  // INCLUDE_HASH_CALC_HPP_
+#endif  // INCLUDE_HASH_CALC_HPP_"

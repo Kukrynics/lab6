@@ -8,7 +8,7 @@ boost::mutex mutex;
 
 hash_calc::hash_calc(const size_t& M, const std::string& str) {
   nameOfReport = str;
-  if (M < boost::thread::hardware_concurrency()) {  //попробовать заменить
+  if (M < boost::thread::hardware_concurrency()) {
     sizeOfThread = M;
   }
   openFilePath();
