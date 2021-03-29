@@ -2,7 +2,7 @@
 #include "hash_calc.hpp"
 
 int main(int, char*[]) {
-  hash_calc A("/home/ivan/lab-06-multithreads/map.json");
+  hash_calc A("/home/kukr/lab-06-multithreads/map.json");
   A.initLogs();
   A.initThreads();
   return 0;
